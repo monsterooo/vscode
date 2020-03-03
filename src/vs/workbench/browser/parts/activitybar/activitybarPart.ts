@@ -50,6 +50,9 @@ interface ICachedViewlet {
 	views?: { when?: string }[];
 }
 
+/**
+ * MYREAD 这里是编辑器最左边的活动栏
+ */
 export class ActivitybarPart extends Part implements IActivityBarService {
 
 	_serviceBrand: undefined;
@@ -278,6 +281,9 @@ export class ActivitybarPart extends Part implements IActivityBarService {
 		}
 	}
 
+	/**
+	 * MYREAD 在活动栏的最顶部创建菜单栏
+	 */
 	private installMenubar() {
 		this.menubar = document.createElement('div');
 		addClass(this.menubar, 'menubar');
@@ -286,7 +292,9 @@ export class ActivitybarPart extends Part implements IActivityBarService {
 		content.prepend(this.menubar);
 
 		// Menubar: install a custom menu bar depending on configuration
+		// 注册并实例化一个CustomMenubarControl服务
 		this.customMenubar = this._register(this.instantiationService.createInstance(CustomMenubarControl));
+		// 调用它在一个元素上创建菜单
 		this.customMenubar.create(this.menubar);
 	}
 

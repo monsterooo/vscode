@@ -9,6 +9,36 @@
 
 		<!-- Workbench Configuration -->
 		<meta id="vscode-workbench-web-configuration" data-settings="{{WORKBENCH_WEB_CONFIGURATION}}">
+		<script>
+			// vscode-workbench-web-configuration是工作空间的配置
+			/*
+			{
+				staticExtensions: [
+					{
+						packageJSON: {
+							name: "css",
+							displayName: "%displayName%",
+							description: "%description%",
+							version: "1.0.0",
+							publisher: "vscode",
+							license: "MIT",
+							engines: {vscode: "0.10.x"},
+							scripts: {
+								'update-grammer': "node ../../build/npm/update-grammar.js octref/language-css grammars/css.cson ./syntaxes/css.tmLanguage.json"
+							},
+							contributes: {},
+							extensionKind: ['web']
+						},
+						extensionLocation: {
+							scheme: "http",
+							authority: "localhost:8080",
+							path: "/static-extension/css"
+						}
+					}
+				]
+			}
+			*/
+		</script>
 
 		<!-- Workarounds/Hacks (remote user data uri) -->
 		<meta id="vscode-remote-user-data-uri" data-settings="{{REMOTE_USER_DATA_URI}}">
@@ -37,6 +67,7 @@
 			}
 		};
 	</script>
+	<!--调用通用加载器 -->
 	<script src="./static/out/vs/loader.js"></script>
 	<script>
 		// NOTE: Changes to inline scripts require update of content security policy

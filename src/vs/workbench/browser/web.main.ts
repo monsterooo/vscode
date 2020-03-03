@@ -50,6 +50,9 @@ import { InMemoryLogProvider } from 'vs/workbench/services/log/common/inMemoryLo
 import { isWorkspaceToOpen, isFolderToOpen } from 'vs/platform/windows/common/windows';
 import { getWorkspaceIdentifier } from 'vs/workbench/services/workspaces/browser/workspaces';
 
+/**
+ * 创建浏览器工作台类
+ */
 class BrowserMain extends Disposable {
 
 	constructor(
@@ -59,16 +62,20 @@ class BrowserMain extends Disposable {
 		super();
 	}
 
+	// MYREAD 创建工作台入口3
 	async open(): Promise<void> {
+		// 初始化服务
 		const services = await this.initServices();
-
+		// 等待dom内容加载完毕
 		await domContentLoaded();
 		mark('willStartWorkbench');
 
 		// Base Theme
+		// 从localStorage中恢复theme
 		this.restoreBaseTheme();
 
 		// Create Workbench
+		// 创建工作台
 		const workbench = new Workbench(
 			this.domElement,
 			services.serviceCollection,
@@ -76,6 +83,7 @@ class BrowserMain extends Disposable {
 		);
 
 		// Listeners
+		// 注册事件
 		this.registerListeners(workbench, services.storageService);
 
 		// Driver
@@ -84,6 +92,7 @@ class BrowserMain extends Disposable {
 		}
 
 		// Startup
+		// 工作台启动
 		workbench.startup();
 	}
 
@@ -146,7 +155,11 @@ class BrowserMain extends Disposable {
 		}
 	}
 
+	/**
+	 * 服务是一系列公共模块，它们都是依赖注入模式
+	 */
 	private async initServices(): Promise<{ serviceCollection: ServiceCollection, logService: ILogService, storageService: BrowserStorageService }> {
+		// 服务收集
 		const serviceCollection = new ServiceCollection();
 
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -156,12 +169,15 @@ class BrowserMain extends Disposable {
 
 		// Log
 		const logsPath = URI.file(toLocalISOString(new Date()).replace(/-|:|\.\d+Z$/g, '')).with({ scheme: 'vscode-log' });
+		// 日志服务
 		const logService = new BufferLogService(this.configuration.logLevel);
 		serviceCollection.set(ILogService, logService);
 
+		// 解析工作台初始化数据
 		const payload = this.resolveWorkspaceInitializationPayload();
 
 		// Environment
+		// 浏览器环境服务
 		const environmentService = new BrowserWorkbenchEnvironmentService({ workspaceId: payload.id, logsPath, ...this.configuration });
 		serviceCollection.set(IWorkbenchEnvironmentService, environmentService);
 
@@ -173,6 +189,7 @@ class BrowserMain extends Disposable {
 		serviceCollection.set(IProductService, productService);
 
 		// Remote
+		// 远程授权服务
 		const remoteAuthorityResolverService = new RemoteAuthorityResolverService(this.configuration.resourceUriProvider);
 		serviceCollection.set(IRemoteAuthorityResolverService, remoteAuthorityResolverService);
 
@@ -181,10 +198,12 @@ class BrowserMain extends Disposable {
 		serviceCollection.set(ISignService, signService);
 
 		// Remote Agent
+		// 远程代理服务
 		const remoteAgentService = this._register(new RemoteAgentService(this.configuration.webSocketFactory, environmentService, productService, remoteAuthorityResolverService, signService, logService));
 		serviceCollection.set(IRemoteAgentService, remoteAgentService);
 
 		// Files
+		// 文件服务
 		const fileService = this._register(new FileService(logService));
 		serviceCollection.set(IFileService, fileService);
 		this.registerFileSystemProviders(environmentService, fileService, remoteAgentService, logService, logsPath);
@@ -322,7 +341,7 @@ class BrowserMain extends Disposable {
 		return undefined;
 	}
 }
-
+// MYREAD 创建工作台入口3
 export function main(domElement: HTMLElement, options: IWorkbenchConstructionOptions): Promise<void> {
 	const renderer = new BrowserMain(domElement, options);
 

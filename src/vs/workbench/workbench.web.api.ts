@@ -58,12 +58,16 @@ interface IShowCandidate {
 	(host: string, port: number, detail: string): Thenable<boolean>;
 }
 
+/**
+ * Workbench 配置参数
+ */
 interface IWorkbenchConstructionOptions {
 
 	/**
 	 * The remote authority is the IP:PORT from where the workbench is served
 	 * from. It is for example being used for the websocket connections as address.
 	 */
+	// 远程授权地址
 	readonly remoteAuthority?: string;
 
 	/**
@@ -155,6 +159,7 @@ interface IWorkbenchConstructionOptions {
  * @param domElement the container to create the workbench in
  * @param options for setting up the workbench
  */
+// MYREAD 创建工作台入口2
 function create(domElement: HTMLElement, options: IWorkbenchConstructionOptions): Promise<void> {
 	return main(domElement, options);
 }

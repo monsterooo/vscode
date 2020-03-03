@@ -228,9 +228,11 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 		accessor.get(IActivityBarService); // not used, but called to ensure instantiated
 
 		// Listeners
+		// 注册编辑器事件
 		this.registerLayoutListeners();
 
 		// State
+		// menuBar sideBar 等等界面组件的状态
 		this.initLayoutState(accessor.get(ILifecycleService), accessor.get(IFileService));
 	}
 

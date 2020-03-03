@@ -115,7 +115,6 @@ function handleStatic(req, res, parsedUrl) {
 
 	// Strip `/static/` from the path
 	const relativeFilePath = path.normalize(decodeURIComponent(parsedUrl.pathname.substr('/static/'.length)));
-
 	return serveFile(req, res, path.join(APP_ROOT, relativeFilePath));
 }
 
@@ -164,6 +163,7 @@ async function handleRoot(req, res) {
 	const staticExtensions = [];
 
 	// Built in extensions
+	// 内置不能删除的静态扩展插件
 	mapExtensionFolderToExtensionPackageJSON.forEach((packageJSON, extensionFolder) => {
 		staticExtensions.push({
 			packageJSON,

@@ -339,6 +339,7 @@ class WorkspaceProvider implements IWorkspaceProvider {
 	}
 
 	// Finally create workbench
+	// MYREAD 创建工作台入口1
 	create(document.body, {
 		...config,
 		workspaceProvider: new WorkspaceProvider(workspace, payload),

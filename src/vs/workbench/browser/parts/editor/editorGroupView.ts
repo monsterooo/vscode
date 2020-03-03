@@ -53,6 +53,9 @@ import { EditorActivation, EditorOpenContext } from 'vs/platform/editor/common/e
 import { IDialogService, IFileDialogService, ConfirmResult } from 'vs/platform/dialogs/common/dialogs';
 import { ILogService } from 'vs/platform/log/common/log';
 
+/**
+ * MYRED 编辑器
+ */
 export class EditorGroupView extends Themable implements IEditorGroupView {
 
 	//#region factory
@@ -189,6 +192,7 @@ export class EditorGroupView extends Themable implements IEditorGroupView {
 			this.titleAreaControl = this.createTitleAreaControl();
 
 			// Editor container
+			// MYREAD 编辑器容器
 			this.editorContainer = document.createElement('div');
 			addClass(this.editorContainer, 'editor-container');
 			this.element.appendChild(this.editorContainer);

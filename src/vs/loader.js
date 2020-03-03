@@ -21,6 +21,7 @@
 var _amdLoaderGlobal = this;
 var _commonjsGlobal = typeof global === 'object' ? global : {};
 var AMDLoader;
+// 环境判断  是否是 Windows Node Electron WebWorker
 (function (AMDLoader) {
     AMDLoader.global = _amdLoaderGlobal;
     var Environment = /** @class */ (function () {
@@ -93,6 +94,7 @@ var AMDLoader;
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
+// load 事件记录
 (function (AMDLoader) {
     var LoaderEvent = /** @class */ (function () {
         function LoaderEvent(type, detail, timestamp) {
@@ -135,6 +137,7 @@ var AMDLoader;
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
+// 辅助函数
 (function (AMDLoader) {
     var Utilities = /** @class */ (function () {
         function Utilities() {
@@ -554,6 +557,7 @@ var AMDLoader;
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 var AMDLoader;
+// 只加载一次脚本, 加载分三个环境 Browser Node WebWorker
 (function (AMDLoader) {
     /**
      * Load `scriptSrc` only once (avoid multiple <script> tags)
@@ -1693,6 +1697,7 @@ var AMDLoader;
 })(AMDLoader || (AMDLoader = {}));
 var define;
 var AMDLoader;
+// 定义通用require加载函数
 (function (AMDLoader) {
     var env = new AMDLoader.Environment();
     var moduleManager = null;
@@ -1783,7 +1788,8 @@ var AMDLoader;
         else {
             if (!env.isElectronRenderer) {
                 AMDLoader.global.define = DefineFunc;
-            }
+						}
+						// 如果是浏览器环境给window定义require对象为RequireFunc
             AMDLoader.global.require = RequireFunc;
         }
     }

@@ -126,6 +126,7 @@ export class Workbench extends Layout {
 		logService.error(message);
 	}
 
+	// MYREAD 启动工作台
 	startup(): IInstantiationService {
 		try {
 
@@ -145,6 +146,7 @@ export class Workbench extends Layout {
 				const hostService = accessor.get(IHostService);
 
 				// Layout
+				// 初始化界面服务
 				this.initLayout(accessor);
 
 				// Registries
@@ -157,12 +159,15 @@ export class Workbench extends Layout {
 				this.registerListeners(lifecycleService, storageService, configurationService, hostService);
 
 				// Render Workbench
+				// 渲染工作空间DOM元素
 				this.renderWorkbench(instantiationService, accessor.get(INotificationService) as NotificationService, storageService, configurationService);
 
 				// Workbench Layout
+				// 工作空间基础布局元素
 				this.createWorkbenchLayout();
 
 				// Layout
+				// 基础layout位置和大小渲染
 				this.layout();
 
 				// Restore
@@ -180,7 +185,7 @@ export class Workbench extends Layout {
 			throw error; // rethrow because this is a critical issue we cannot handle properly here
 		}
 	}
-
+	// 初始化服务
 	private initServices(serviceCollection: ServiceCollection): IInstantiationService {
 
 		// Layout Service
@@ -192,14 +197,18 @@ export class Workbench extends Layout {
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		// All Contributed Services
+		// 遍历所有的服务
 		const contributedServices = getSingletonServiceDescriptors();
 		for (let [id, descriptor] of contributedServices) {
+			// 注册到我们的服务里面来
 			serviceCollection.set(id, descriptor);
 		}
 
+		// 实例化服务
 		const instantiationService = new InstantiationService(serviceCollection, true);
 
 		// Wrap up
+		// 唤起服务？
 		instantiationService.invokeFunction(accessor => {
 			const lifecycleService = accessor.get(ILifecycleService);
 
